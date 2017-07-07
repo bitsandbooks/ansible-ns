@@ -1,0 +1,18 @@
+---
+- name: ensure presence of base packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+    cache_valid_time: 21600
+  with_items:
+    - ansible
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - git
+    - software-properties-common
+
+- include: skel.yml
+- include: timezone.yml
+- include: users.yml

@@ -1,0 +1,4 @@
+---
+- name: timezone - ensure timezone is set to UTC
+  timezone:
+    name: UTC

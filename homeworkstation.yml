@@ -1,0 +1,5 @@
+---
+- hosts: homeworkstation
+  become: yes
+  roles:
+    - common

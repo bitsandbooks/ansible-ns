@@ -1,0 +1,17 @@
+---
+- name: users - ensure presence, gid of default group
+  group: 
+    name: "{{ default_group.name }}"
+    gid: "{{ default_group.gid }}"
+    state: present
+
+- name: users - ensure presence, sudo privileges of admin users
+  user:
+    name: "{{ item.username }}"
+    uid: "{{ item.uid }}"
+    group: "{{ default_group.name }}"
+    groups: sudo
+    password: "{{ item.passwd }}"
+    shell: "{{ item.shell }}"
+    state: present
+  with_items: "{{ sudo_users }}"
