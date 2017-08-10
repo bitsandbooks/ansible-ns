@@ -31,7 +31,7 @@
 - name: skel - ensure presence, permissions of `known_hosts` and `authorized_keys`
   file:
     dest: "{{ item }}"
-    state: touch
+    state: file
     mode: 0644
     owner: root
     group: root

@@ -13,6 +13,7 @@
     - git
     - software-properties-common
 
+- include: root.yml
 - include: skel.yml
 - include: timezone.yml
 - include: users.yml
