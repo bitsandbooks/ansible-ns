@@ -1,0 +1,20 @@
+---
+- name: packages - ensure makemkv ppa (by heyarje) is installed
+  apt_repository:
+    repo: 'ppa:heyarje/makemkv-beta'
+
+- name: packages - ensure base packages are installed
+  apt:
+    name: "{{ packagesbase }}"
+    state: present
+    update_cache: yes
+
+- name: packages - ensure extra packages are installed
+  apt:
+    name: "{{ packagesextra }}"
+    state: present
+
+- name: packages - ensure makemkv package is installed
+  apt:
+    name: makemkv-bin
+    state: present

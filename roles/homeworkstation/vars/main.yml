@@ -1,0 +1,23 @@
+---
+firewallports:
+  - OpenSSH
+  - Samba
+  - 9091/tcp
+
+packagesbase:
+  - apt-transport-https
+  - bash-completion
+  - ca-certificates
+  - hfsprogs
+  - htop
+  - software-properties-common
+  - vim
+  - zfsutils-linux
+
+packagesextra:
+  - handbrake
+  - handbrake-cli
+  - chromium-browser
+  - chrome-gnome-shell
+  - epiphany-browser
+  - fonts-roboto

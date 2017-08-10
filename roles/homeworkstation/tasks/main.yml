@@ -1,0 +1,9 @@
+---
+- name: timezone - ensure timezone is set to chicago
+  timezone:
+    name: America/Chicago
+
+- include: packages.yml
+- include: firewall.yml
+- include: srv-media.yml
+- include: samba.yml

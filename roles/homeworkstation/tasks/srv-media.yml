@@ -1,0 +1,27 @@
+---
+- name: srv-media - ensure presence of `aufs-tools` package
+  apt:
+    name: aufs-tools
+    state: latest
+    update_cache: yes
+    cache_valid_time: "{{ cache_valid_time }}"
+
+- name: srv-media - ensure presence of `/srv/media` folder
+  file:
+    path: /srv/media
+    state: directory
+    owner: root
+    group: "{{ default_group.name }}"
+
+- name: srv-media - ensure presence of systemd mount for `/srv/media`
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+  notify: start srv-media
+  with_items:
+    - src: srv-media.mount
+      dest: /etc/systemd/system/srv-media.mount
+    - src: srv-media.automount
+      dest: /etc/systemd/system/srv-media.automount

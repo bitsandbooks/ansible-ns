@@ -1,0 +1,13 @@
+---
+- name: firewall - ensure ufw is active
+  ufw: state=enabled policy=allow logging=on
+
+- name: firewall - ensure default services are available
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  with_items:
+    - 22
+    - 80
+    - 443

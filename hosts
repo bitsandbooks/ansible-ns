@@ -1,2 +1,5 @@
 [homeworkstation]
-squeakytest ansible_connection=local
+squeaky
+
+[vmworkstation]
+vmsqueaky
