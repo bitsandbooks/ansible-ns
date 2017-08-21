@@ -1,0 +1,54 @@
+---
+- name: plex - ensure plex.tv repo is present
+  apt_repository:
+    repo: deb https://downloads.plex.tv/repo/deb ./public main
+    state: present
+
+- name: plex - ensure apt-repo key is present
+  apt_key:
+    url: "https://downloads.plex.tv/plex-keys/PlexSign.key"
+    state: present
+
+- name: plex - ensure plexmediaserver package is present (this might take a while)
+  apt:
+    name: plexmediaserver
+    state: present
+    update_cache: yes
+    allow_unauthenticated: yes
+  notify:
+    - start plex
+
+- name: plex - ensure plex services can get through the firewall
+  ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.protocol }}"
+  with_items:
+    - port: 1900
+      protocol: "udp"
+    - port: 3005
+      protocol: "tcp"
+    - port: 5353
+      protocol: "udp"
+    - port: 8324
+      protocol: "tcp"
+    - port: 32400
+      protocol: "tcp"
+    - port: 32410
+      protocol: "udp"
+    - port: 32412
+      protocol: "udp"
+    - port: 32413
+      protocol: "udp"
+    - port: 32414
+      protocol: "udp"
+    - port: 32469
+      protocol: "tcp"
+
+- name: plex - ensure permissions of plex metadata folder (this might take a while)
+  file:
+    path: /home/apps/plexmediaserver
+    owner: plex
+    group: plex
+    mode: 0755
+    recurse: yes

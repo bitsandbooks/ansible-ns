@@ -1,0 +1,6 @@
+---
+- hosts: homeserver
+  become: yes
+  roles:
+    - common
+    - homeserver

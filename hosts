@@ -3,3 +3,9 @@ squeaky
 
 [vmworkstation]
 vmsqueaky
+
+[homeserver]
+zed
+
+[vmhomeserver]
+vmzed ansible_user=ubuntu

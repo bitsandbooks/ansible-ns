@@ -1,0 +1,38 @@
+---
+- name: samba - ensure share symlinks for users exist
+  file:
+    name: "/srv/{{ item.username }}"
+    src: "/home/{{ item.username }}"
+    state: link
+  with_items: "{{ sudo_users }}"
+
+- name: samba - ensure packages are installed
+  apt:
+    name: samba
+    state: latest
+    update_cache: yes
+    cache_valid_time: "{{ cache_valid_time }}"
+  notify:
+    - start samba
+
+- name: samba - ensure config files are in place
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - src: avahi-samba.xml
+      dest: /etc/avahi/services/smbd.service
+    - src: smb.conf
+      dest: /etc/samba/smb.conf
+  notify: restart samba
+
+- name: samba - ensure users are in the samba password file
+  shell: "(echo {{ item.upasswd }}; echo {{ item.upasswd }}) | smbpasswd -s -a {{ item.username }}"
+  with_items: "{{ sudo_users }}"
+  notify: restart samba
+
+- name: samba - ensure samba services can get through the firewall
+  ufw:
+    rule: allow
+    port: 445
+    proto: "tcp"

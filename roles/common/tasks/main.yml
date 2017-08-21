@@ -6,12 +6,14 @@
     update_cache: yes
     cache_valid_time: 21600
   with_items:
-    - ansible
     - apt-transport-https
+    - bash-completion
     - ca-certificates
     - curl
     - git
+    - htop
     - software-properties-common
+    - vim
 
 - include: root.yml
 - include: skel.yml

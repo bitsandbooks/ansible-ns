@@ -1,0 +1,6 @@
+---
+- hosts: vmhomeserver
+  become: yes
+  roles:
+    - common
+    - homeserver

@@ -1,0 +1,27 @@
+---
+- name: timemachine - ensure packages are installed
+  apt:
+    name: netatalk
+    state: latest
+    update_cache: yes
+    cache_valid_time: "{{ cache_valid_time }}"
+  notify:
+    - start netatalk
+
+- name: timemachine - ensure config files are in place
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - src: applevolumes.default
+      dest: /etc/netatalk/AppleVolumes.default
+    - src: avahi-netatalk.xml
+      dest: /etc/avahi/services/afpd.service
+  notify: 
+    - restart netatalk
+
+- name: samba - ensure samba services can get through the firewall
+  ufw:
+    rule: allow
+    port: 548
+    proto: "tcp"

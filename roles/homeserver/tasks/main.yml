@@ -1,0 +1,17 @@
+---
+- name: ensure base packages are installed
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - avahi-daemon
+    - zfsutils-linux
+    - zsh
+  notify:
+    - start avahi
+
+- include: srv-media.yml
+- include: firewall.yml
+- include: samba.yml
+- include: timemachine.yml
+- include: plex.yml
